@@ -1,14 +1,14 @@
 {
-  "name": "test-telegram-bot-e2e",
+  "name": "telegram-bot-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "implicitDependencies": ["test-telegram-bot"],
+  "implicitDependencies": ["telegram-bot"],
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/test-telegram-bot-e2e/jest.config.ts",
+        "jestConfig": "apps/telegram-bot-e2e/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -16,7 +16,7 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/test-telegram-bot-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/telegram-bot-e2e/**/*.{js,ts}"]
       }
     }
   }
