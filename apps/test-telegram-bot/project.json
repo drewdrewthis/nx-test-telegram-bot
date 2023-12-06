@@ -1,0 +1,57 @@
+{
+  "name": "test-telegram-bot",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/test-telegram-bot/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/test-telegram-bot",
+        "main": "apps/test-telegram-bot/src/main.ts",
+        "tsConfig": "apps/test-telegram-bot/tsconfig.app.json",
+        "assets": ["apps/test-telegram-bot/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/test-telegram-bot/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "test-telegram-bot:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "test-telegram-bot:build:development"
+        },
+        "production": {
+          "buildTarget": "test-telegram-bot:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/test-telegram-bot/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/test-telegram-bot/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
