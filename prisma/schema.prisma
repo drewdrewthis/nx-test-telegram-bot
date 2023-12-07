@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Wallet {
+  id             String       @id @default(uuid())
+  privateKey     String /// @encrypted
+  TelegramUser   TelegramUser @relation(fields: [telegramUserId], references: [id])
+  telegramUserId String
+}
+
+// https://core.telegram.org/bots/api#user
+model TelegramUser {
+  id                      String   @id @default(uuid())
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  telegramId              Int // Unique identifier for this user or bot
+  isBot                   Boolean // True, if this user is a bot
+  firstName               String // User's or bot's first name
+  lastName                String? // Optional. User's or bot's last name
+  username                String? // Optional. User's or bot's username
+  languageCode            String? // Optional. IETF language tag of the user's language
+  isPremium               Boolean? // Optional. True, if this user is a Telegram Premium user
+  addedToAttachmentMenu   Boolean? // Optional. True, if this user added the bot to the attachment menu
+  canJoinGroups           Boolean? // Optional. True, if the bot can be invited to groups
+  canReadAllGroupMessages Boolean? // Optional. True, if privacy mode is disabled for the bot
+  supportsInlineQueries   Boolean? // Optional. True, if the bot supports inline queries
+  wallets                 Wallet[] // Wallets associated with the user
+}
